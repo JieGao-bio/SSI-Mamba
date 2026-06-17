@@ -1,61 +1,50 @@
 # SSI-Mamba
-## 数据准备与使用说明
 
-首先，需要前往 [ENCODE 数据库](https://www.encodeproject.org/) 下载所需细胞系的组蛋白修饰文件。
+## Data Preparation
 
-例如：
+First, download the required histone modification files for your target cell line from the [ENCODE database](https://www.encodeproject.org/).
 
-* 细胞系：`GM12878`
-* 组蛋白修饰类型：`H3K27me3`
-* 文件格式：`.bigWig`
-
-示例文件：
+For example, for the **GM12878** cell line, you may download:
 
 ```text
 GM12878_H3K27me3.bigWig
 ```
 
-同时，还需要准备对应物种的基因组碱基序列文件，例如：
+In addition, download the corresponding reference genome sequence file in `.fa` format, such as:
 
 ```text
 hg38.fa
 ```
 
-## 文件路径配置
+## Configure File Paths
 
-下载完成后，请将以下文件路径修改到 `Train.py` 文件中：
+After downloading the required files, modify the corresponding file paths in `Train.py`, including:
 
-1. 组蛋白修饰文件路径，例如：
+* The histone modification `.bigWig` file (e.g., `GM12878_H3K27me3.bigWig`)
+* The DNA sequence `.fa` file corresponding to the target species (e.g., `hg38.fa`)
+* The silencer-silencer interaction dataset for the target cell line
 
-```text
-/path/to/GM12878_H3K27me3.bigWig
+Example:
+
+```python
+histone_file = "/path/to/GM12878_H3K27me3.bigWig"
+genome_file = "/path/to/hg38.fa"
+interaction_file = "/path/to/silencer_interaction_dataset"
 ```
 
-2. 对应细胞系或物种的 DNA 序列文件路径，例如：
+Please replace the example paths with the actual locations of your downloaded files.
 
-```text
-/path/to/hg38.fa
-```
+## Model Training
 
-3. 对应细胞系的沉默子-沉默子互作数据集路径，例如：
-
-```text
-/path/to/silencer_silencer_interaction_dataset
-```
-
-请根据实际文件存放位置，在 `Train.py` 中修改相应参数。
-
-## 模型训练
-
-完成路径配置后，可以运行 `Train.py` 进行模型训练：
+After configuring all file paths, run the following command to train the model:
 
 ```bash
 python Train.py
 ```
 
-## 权重预测
+## Prediction
 
-训练完成后，也可以通过 `test.py` 文件对权重进行预测：
+You can also use `test.py` to perform predictions with the trained model weights:
 
 ```bash
 python test.py
